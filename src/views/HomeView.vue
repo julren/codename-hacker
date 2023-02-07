@@ -24,10 +24,8 @@ function onEnter() {
   prompt.value = '';
   setPromptValue('')
   setTimeout(() => {
-    if (terminalContainer.value) {
-      terminalContainer.value!.scrollTop = terminalContainer.value.scrollHeight - terminalContainer.value.clientHeight;
-    }
-  })
+    promptInput.value?.scrollIntoView()
+  } )
 }
 
 function nextText(text: string): string {
@@ -49,8 +47,7 @@ function nextText(text: string): string {
 We need to go deeper. Our friend god normally uses this system.
 To access his account we need a password.
 He is known to be forgetful sometimes. Maybe we can use this to our advantage?
-Use the (l)ogin command to try to get in.
- `
+Use the (l)ogin command to try to get in.`
   }
   if (text.includes('cat')) {
     return `usage 'cat <filename>'`
@@ -88,6 +85,7 @@ user:
       hasCorrectPw.value = true;
       showImg.value = true;
       return `🎉 You're in! Du bist ein echter Hackerman!`
+
     }
     return `wrong password. try again or exit with (c)ancel`
   }
@@ -102,7 +100,7 @@ cat   print file content`
 function validate(event : Event) {
   setTimeout(() => {
     prompt.value = promptInput.value.innerText.trim()
-  })
+  }, 10)
 }
 
 function setPromptValue(value: string) {
@@ -158,7 +156,7 @@ Welcome! Press (h)elp for information about available commands.
 }
   #container {
     padding-top: 2rem;
-  min-height: 100%;
+    min-height: 100%;
 }
 
   .prompt {
