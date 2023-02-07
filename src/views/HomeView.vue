@@ -158,9 +158,7 @@ Welcome! Press (h)elp for information about available commands.
 }
   #container {
     padding-top: 2rem;
-    display: grid;
-    grid-template-rows: 1fr auto;
-  height: 100%;
+  min-height: 100%;
 }
 
   .prompt {
