@@ -15,17 +15,17 @@ const terminalContainer = ref<HTMLElement>()
 
 function onEnter() {
   showImg.value = false;
-  const promptValue = prompt.value.trim();
-  const next = nextText(promptValue)
+  const promptValue = promptInput.value.innerText.trim()
+  const next = nextText(promptValue.toLowerCase())
   if (!promptValue) return;
 
   output.value.push(`> ${promptValue}`)
   output.value.push(next)
-  prompt.value = '';
+  promptInput.value.innerText = '';
   setPromptValue('')
   setTimeout(() => {
     promptInput.value?.scrollIntoView(false)
-  } )
+  },0)
 }
 
 function nextText(text: string): string {
@@ -97,12 +97,6 @@ const help =
 `ls    list files in current directory
 cat   print file content`
 
-function validate(event : Event) {
-  setTimeout(() => {
-    prompt.value = promptInput.value.innerText.trim()
-  }, 10)
-}
-
 function setPromptValue(value: string) {
   promptInput.value.innerText = value;
 }
@@ -137,7 +131,7 @@ Welcome! Press (h)elp for information about available commands.
 <div class="prompt">
   <div>> </div>
   <div style="display: flex;">
-    <div class="promptInput" ref="promptInput"  @keydown.enter.prevent @keyup.enter.prevent="onEnter" @keyup="validate" autofocus contenteditable="true"></div>
+    <div class="promptInput" ref="promptInput"  @keydown.enter.prevent @keyup.enter.prevent="onEnter" autofocus contenteditable="true"></div>
     <div class="caret"> </div>
   </div>
 <!--  <input ref="promptInput" v-model="prompt" @keyup.enter="onEnter" autofocus/>-->
