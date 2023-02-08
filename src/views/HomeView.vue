@@ -67,7 +67,7 @@ function nextText(text: string): string {
 We need to go deeper. Our friend god normally uses this system.
 To access his account we need a password.
 He is known to be forgetful sometimes. Maybe we can figure it out?
-Use the (l)ogin command to try to get in.`
+Look around and try to get in.`
   }
 
   if (text === 'cat snack.txt') {
