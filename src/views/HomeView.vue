@@ -8,7 +8,8 @@ const isLogginIn = ref(false)
 const hasCorrectUser = ref(false)
 const hasCorrectPw = ref(false)
 const showImg = ref(false)
-
+const isInFolder = ref(false)
+const location = ref('')
 const prompt = ref('')
 const promptInput = ref()
 const terminalContainer = ref<HTMLElement>()
@@ -37,18 +38,53 @@ function nextText(text: string): string {
     return help;
   }
 
+  if (text === 'cd recipes' || text === 'cd /recipes') {
+    isInFolder.value = true
+    location.value = 'recipes'
+    return ''
+  }
+
+  if (text === 'cd ..') {
+    isInFolder.value = false
+    location.value = ''
+    return ''
+  }
+
+  if (text.includes('cd')) {
+    return "usage 'cd /directory' or 'cd ..' to go back"
+  }
+
+  if (text === 'ls' && isInFolder.value) {
+    return `snack.txt`
+  }
 
   if (text === 'ls') {
-    return `welcome.txt`
+    return `welcome.txt   /recipes`
   }
 
   if (text === 'cat welcome.txt') {
-    return `Welcome!
+    return `
 We need to go deeper. Our friend god normally uses this system.
 To access his account we need a password.
-He is known to be forgetful sometimes. Maybe we can use this to our advantage?
+He is known to be forgetful sometimes. Maybe we can figure it out?
 Use the (l)ogin command to try to get in.`
   }
+
+  if (text === 'cat snack.txt') {
+    return `
+My Favorite Snack
+
+Ingredients
+- Peanuts
+
+Steps:
+1. Make Peanuts
+2. Done!
+
+I hope I didn't forget anything?`
+}
+
+
   if (text.includes('cat')) {
     return `usage 'cat <filename>'`
   }
@@ -77,10 +113,8 @@ user:
   }
 
 
-
-
   if (isLogginIn.value && hasCorrectUser.value) {
-    if (text === 'peanut') {
+    if (text === 'chocolate') {
       isLogginIn.value = false
       hasCorrectPw.value = true;
       showImg.value = true;
@@ -96,7 +130,9 @@ user:
 
 const help =
 `ls    list files in current directory
-cat   print file content`
+cat   print file content, usage 'cat filename.txt'
+cd    change directory, usage 'cd /directory' or 'cd ..' to go back
+login login to a user account`
 
 function setPromptValue(value: string) {
   promptInput.value.innerText = value;
@@ -121,7 +157,8 @@ function setPromptValue(value: string) {
 ┃╭━╮┃╰━╯┃┃╱╭┫╭╮┃┃╭━━┫╭╮╭╯
 ┃┃╱┃┃╭━╮┃╰━╯┃┃┃╰┫╰━━┫┃┃╰╮
 ╰╯╱╰┻╯╱╰┻━━━┻╯╰━┻━━━┻╯╰━╯
-Welcome! Press (h)elp for information about available commands.
+
+It's hacking time. Press (h)elp to find out about about available commands.
 <span class="line" v-for="outputText of output">{{outputText}}</span></output></pre>
       <Transition>
       <img src="https://i.ytimg.com/vi/KEkrWRHCDQU/maxresdefault.jpg" v-if="showImg">
@@ -130,10 +167,10 @@ Welcome! Press (h)elp for information about available commands.
 
     </div>
 <div class="prompt">
-  <div>> </div>
+  <div>>{{location}}</div>
   <div style="display: flex;">
     <div class="promptInput" ref="promptInput"  @keydown.enter.prevent @keyup.enter.prevent="onEnter" autofocus contenteditable="true"></div>
-    <div class="caret"> </div>
+    <div class="caret"></div>
   </div>
 <!--  <input ref="promptInput" v-model="prompt" @keyup.enter="onEnter" autofocus/>-->
 </div>
