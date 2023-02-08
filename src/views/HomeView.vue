@@ -8,6 +8,7 @@ const isLogginIn = ref(false)
 const hasCorrectUser = ref(false)
 const hasCorrectPw = ref(false)
 const showImg = ref(false)
+const imgContainer = ref<HTMLElement>()
 const isInFolder = ref(false)
 const location = ref('')
 const prompt = ref('')
@@ -118,7 +119,7 @@ user:
       isLogginIn.value = false
       hasCorrectPw.value = true;
       showImg.value = true;
-      setTimeout(() => promptInput.value?.scrollIntoView(false), 5)
+      setTimeout(() => promptInput.value?.scrollIntoView(false), 0)
       return `🎉 You're in! Du bist ein echter Hackerman!`
 
     }
@@ -161,7 +162,7 @@ function setPromptValue(value: string) {
 It's hacking time. Press (h)elp to find out about about available commands.
 <span class="line" v-for="outputText of output">{{outputText}}</span></output></pre>
       <Transition>
-      <img src="https://i.ytimg.com/vi/KEkrWRHCDQU/maxresdefault.jpg" v-if="showImg">
+      <img src="https://i.ytimg.com/vi/KEkrWRHCDQU/maxresdefault.jpg" v-if="showImg" ref="imgContainer">
         </Transition>
 
 
@@ -205,6 +206,7 @@ It's hacking time. Press (h)elp to find out about about available commands.
  img {
    margin-top: 2rem;
    width: 100%;
+   max-width: 500px;
  }
 
 .v-enter-active,
