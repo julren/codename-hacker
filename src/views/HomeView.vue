@@ -24,7 +24,7 @@ function onEnter() {
   prompt.value = '';
   setPromptValue('')
   setTimeout(() => {
-    promptInput.value?.scrollIntoView()
+    promptInput.value?.scrollIntoView(false)
   } )
 }
 
@@ -137,7 +137,7 @@ Welcome! Press (h)elp for information about available commands.
 <div class="prompt">
   <div>> </div>
   <div style="display: flex;">
-    <div class="promptInput" ref="promptInput"  @keydown.enter.prevent="onEnter" @keydown="validate" autofocus contenteditable="true"></div>
+    <div class="promptInput" ref="promptInput"  @keydown.enter.prevent @keyup.enter.prevent="onEnter" @keyup="validate" autofocus contenteditable="true"></div>
     <div class="caret"> </div>
   </div>
 <!--  <input ref="promptInput" v-model="prompt" @keyup.enter="onEnter" autofocus/>-->
@@ -155,7 +155,7 @@ Welcome! Press (h)elp for information about available commands.
   display: none;
 }
   #container {
-    padding-top: 2rem;
+    padding-top: 2.5rem;
     min-height: 100%;
 }
 
@@ -193,6 +193,7 @@ Welcome! Press (h)elp for information about available commands.
   color: white;
   font: 1rem Inconsolata, monospace;
   text-shadow: 0 0 5px #C8C8C8;
+  scroll-margin: 2rem;
 }
 .promptInput:focus {
   background: transparent;
