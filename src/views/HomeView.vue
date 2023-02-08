@@ -24,7 +24,7 @@ function onEnter() {
   promptInput.value.innerText = '';
   setPromptValue('')
   setTimeout(() => {
-    promptInput.value?.scrollIntoView(false)
+    promptInput.value?.scrollIntoView()
   },0)
 }
 
@@ -84,6 +84,7 @@ user:
       isLogginIn.value = false
       hasCorrectPw.value = true;
       showImg.value = true;
+      setTimeout(() => promptInput.value?.scrollIntoView(false), 5)
       return `🎉 You're in! Du bist ein echter Hackerman!`
 
     }
@@ -187,7 +188,7 @@ Welcome! Press (h)elp for information about available commands.
   color: white;
   font: 1rem Inconsolata, monospace;
   text-shadow: 0 0 5px #C8C8C8;
-  scroll-margin: 2rem;
+  scroll-margin: 4rem;
 }
 .promptInput:focus {
   background: transparent;
